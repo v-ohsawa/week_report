@@ -1,0 +1,46 @@
+@import "bootstrap";
+body {
+	padding-top: 70px;
+}
+
+select, input, .m-bottom{
+	margin-bottom: 20px;
+}
+
+.p-top{
+	padding-top:7px;
+	margin-left:20px;
+}
+
+.m-top{
+	margin-top: 20px;
+}
+
+html{
+	background-image: url(/assets/back.jpg);
+	background-attachment: fixed;
+}
+
+body{
+	background-color: rgba(51,51,51,0.6);
+	color: #fff;
+}
+
+.modal{
+color:#000;
+}
+
+.footer{
+    clear:both;
+}
+
+table{
+	margin-top:10px;
+	word-break: break-all;
+	word-wrap: break-word;
+}
+
+.container {width: auto;}
+
+.navbar{
+	background-color: rgba(255,255,255,0.9);}

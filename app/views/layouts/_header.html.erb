@@ -1,0 +1,55 @@
+<header>
+	<!-- Fixed navbar -->
+	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<%= link_to "Tec. Div. week report", root_path, id: "logo",class: "navbar-brand" %>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+<div id="textsizer" class="p-top">
+	<%= link_to "小","#", class:"btn btn-default" %>
+        <%= link_to "中","#", class:"btn btn-default" %>
+        <%= link_to "大","#", class:"btn btn-default" %>
+</div>
+<script type="text/javascript">
+jQuery(document).ready(function() {
+    jQuery("#textsizer a").textresizer({
+        target: "#div815",
+        type: "fontSize",
+        sizes: ["12px", "16px", "20px"],
+        selectedIndex: 1
+    });
+});
+</script>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+
+					<li><%= link_to "ホーム", root_path %></li>
+					<!--<li><%= link_to "開発室", root_path %></li>-->
+					<% if signed_in? %>
+					<li><%= link_to "一覧",{controller:"all_reports", action:"index"} %></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">アカウント <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><%= link_to "パスワード変更", {controller:"user_setting", action:"edit", id:current_user.id} %></li>
+								<li class="divider"></li>
+								<li><%= link_to "サインアウト", signout_path, method: "delete" %></li>
+							</ul>
+						</li>
+					<% else %>
+						<li><%= link_to "サインイン", signin_path %></li>
+					<% end %>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div>
+	</div>
+</header>

@@ -1,0 +1,58 @@
+
+		<!--モーダルの開始ボタン-->
+		<section>
+			<h4 class="text-center">
+				<button class="btn btn-info col-xs-3 col-xs-offset-2 m-bottom" data-toggle="modal" data-target="#modal_month">
+					月報検索
+				</button>
+			</h4>
+		</section>
+
+		<!--モーダル開始-->
+		<div class="modal fade" id="modal_month" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content col-xs-12 text-center">
+
+					<!--モーダルヘッダ-->
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">月報検索</h4>
+					</div>
+
+					<!--モーダルコンテンツ-->
+					<div class="modal-body">
+						<section>
+							<%= form_tag("/search_month") do %>
+
+								<!--月指定-->
+								<div class="form-group col-xs-12">
+									<label for="exampleInputEmail1">月を選んで下さい</label>
+									<%= month_field  :item, :month, {value: (@year + "-" + @start_day.strftime('%m')),class: "form-control"} %>
+								</div>
+
+								<!--プロジェクト指定-->
+								<div class="form-group col-xs-12">
+									<label for="exampleInputEmail1">プロジェクト</label>
+									<%= collection_select :item, :project_id, Project.all.order(:code), :id, :project_id_and_name, {:include_blank => "全てのプロジェクト",:selected => @project},{class: "form-control"} %>
+								</div>
+
+								<!--メンバー指定-->
+								<div class="form-group col-xs-12">
+									<label for="exampleInputEmail1">メンバー</label>
+									<%= collection_select :item, :user_id, User.where.not(admin:true).order(:worker_id), :id, :user_id_and_name, {:include_blank => "全員",:selected => @user},{class: "form-control"} %>
+								</div>
+
+								<!--ボタン-->
+								<div class="actions col-xs-12">
+									<%= submit_tag "完了", class: "btn btn-success m-bottom col-xs-6 col-xs-offset-3" %>
+									<button type="button" class="btn btn-default m-bottom col-xs-6 col-xs-offset-3" data-dismiss="modal">閉じる</button>
+								</div>
+
+							<% end %>
+						</section>
+					</div>
+					<!--モーダルコンテンツ終了-->
+				</div>
+			</div>
+		</div>
+		<!--モーダル終了-->
