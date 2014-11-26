@@ -2,8 +2,8 @@
 		<!--モーダルの開始ボタン-->
 		<section>
 			<h4 class="text-center">
-				<button class="btn btn-info col-xs-3 col-xs-offset-2 m-bottom" data-toggle="modal" data-target="#modal_month">
-					月報検索
+				<button class="btn btn-info col-xs-2 col-xs-offset-5 m-bottom" data-toggle="modal" data-target="#modal_month">
+					週報検索
 				</button>
 			</h4>
 		</section>
@@ -16,19 +16,39 @@
 					<!--モーダルヘッダ-->
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="myModalLabel">月報検索</h4>
+						<h4 class="modal-title" id="myModalLabel">週報検索</h4>
 					</div>
 
 					<!--モーダルコンテンツ-->
 					<div class="modal-body">
 						<section>
-							<%= form_tag("/search_month") do %>
+							<%= form_tag("/search_week_or_month") do %>
 
-								<!--月指定-->
-								<div class="form-group col-xs-12">
-									<label for="exampleInputEmail1">月を選んで下さい</label>
-									<%= month_field  :item, :month, {value: (@year + "-" + @start_day.strftime('%m')),class: "form-control"} %>
+								<!--週報・月報選択-->
+								<div class="radio">
+									<label><%= radio_button  :item, :search_target, "週報", {:checked => true} %>週報</label>
+									<label><%= radio_button  :item, :search_target, "月報" %>月報</label>
+									<label><%= radio_button  :item, :search_target, "1ヶ月" %>1ヶ月分</label>
 								</div>
+								<!--<div class="checkbox">
+									<label>
+										<%= check_box  :item, :search_target, {},true,false %>月報
+									</label>
+								</div>-->
+
+								<!--日付指定-->
+								<div class="form-group col-xs-12">
+									<label for="exampleInputEmail1">目的の週や月を含む日付を選択して下さい</label>
+									<%= text_field  :item, :date, {value: @start_day.strftime('%Y年%m月%d日'),class: "form-control datetimepicker"} %>
+								</div>
+
+								<script>
+									$(".datetimepicker").datetimepicker({
+ 										lang:'ja',
+ 										timepicker:false,
+ 										format:"Y年m月d日"
+									});
+								</script>
 
 								<!--プロジェクト指定-->
 								<div class="form-group col-xs-12">

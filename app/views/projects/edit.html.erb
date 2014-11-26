@@ -1,6 +1,18 @@
-<h1>Editing project</h1>
+<h4 class="text-center">プロジェクト情報更新</h4>
 
-<%= render 'form' %>
+<div class="row">
+	<div class="text-center col-md-4 col-md-offset-4">
+		<%= form_for(@project) do |f| %>
+			<%= render 'error_messages' %>
 
-<%= link_to 'Show', @project %> |
-<%= link_to 'Back', projects_path %>
+		<%= f.label :code, "コード" %>
+		<%= f.text_field :code, class: "form-control text-center" %>
+
+		<%= f.label :name, "プロジェクト名" %>
+		<%= f.text_field :name, class: "form-control text-center" %>
+
+		<%= f.submit "変更", class: "btn btn-lg btn-primary col-xs-12 m-bottom m-top" %>
+	<% end %>
+
+	</div>
+</div>

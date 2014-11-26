@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
+	resources :groups
 	resources :week_reports
 	resources :user_setting, only: [:edit, :update]
-	resources :users
-	resources :projects
+	resources :users, except: [:show]
+	resources :projects, except: [:show]
 	resources :sessions, only: [:new, :create, :destroy]
 
 	root 'week_reports#index'
@@ -10,8 +11,7 @@ Rails.application.routes.draw do
 	match '/signout', to: 'sessions#destroy',			via: 'delete'
 	match '/all_reports',  to: 'all_reports#index',			via: 'get'
 	match '/change_week',  to: 'week_reports#change_week',		via: 'get'
-	match '/search_month',  to: 'all_reports#search_month',		via: 'post'
-	match '/search_week',  to: 'all_reports#search_week',		via: 'post'
+	match '/search_week_or_month',  to: 'all_reports#search_week_or_month',		via: 'post'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

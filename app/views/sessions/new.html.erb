@@ -1,18 +1,13 @@
-<% provide(:title, "Sign in") %>
-<h4 class="text-center">Sign In</h4>
+<h4 class="text-center">ログイン</h4>
 
 <div class="row">
-	<div class="text-center col-xs-6 col-xs-offset-3">
+	<div class="text-center col-md-6 col-md-offset-3">
 		<%= form_for(:session, url: sessions_path) do |f| %>
-
 		<%= f.label :社員番号 %>
 		<%= f.text_field :worker_id, class: "form-control text-center" %>
-
 		<%= f.label :パスワード %>
 		<%= f.password_field :password, class: "form-control text-center" %>
-
 		<%= f.submit "サインイン", class: "btn btn-primary btn-lg r-form" %>
-	<% end %>
-
+		<% end %>
 	</div>
 </div>

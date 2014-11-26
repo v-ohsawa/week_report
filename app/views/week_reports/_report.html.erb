@@ -5,7 +5,7 @@
 		<td><%= simple_format(week_report.understood) %></td>
 		<td><%= simple_format(week_report.next) %></td>
 		<td>
-			<%= link_to "編集", edit_week_report_path(week_report,year: @year,week: @week),class: "btn btn-primary" %>
+			<%= link_to "編集", edit_week_report_path(week_report),class: "btn btn-primary" %>
 			<%= link_to "削除",week_report, :method => :delete,data: {confirm: "本当に削除しますか？" },title: week_report.done,class: "btn btn-danger" %>
 		</td>
 	</tr>

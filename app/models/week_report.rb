@@ -7,8 +7,6 @@ class WeekReport < ActiveRecord::Base
 	validates :done, presence: true, length: { maximum: 2000 }
 	validates :understood, presence: true, length: { maximum: 2000 }
 	validates :next, presence: true, length: { maximum: 2000 }
-	validates :week_num, presence: true
-	validates :year_num, presence: true
 	validates :start_day, presence: true
 	validates :end_day, presence: true
 

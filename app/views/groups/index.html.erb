@@ -1,0 +1,25 @@
+<div class="container">
+	<h3>グループ一覧</h3>
+	<section>
+		<%= link_to '追加', new_group_path, class: "btn btn-success" %>
+	</section>
+	<table class="table table-condensed">
+		<thead>
+			<tr>
+				<th>グループ名</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @groups.each do |group| %>
+			<tr>
+				<td><%= group.name %></td>
+				<td>
+					<%= link_to '編集', edit_group_path(group), class: "btn btn-primary" %>
+					<%= link_to '削除', group, method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-danger" %></td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+	<br>
+</div>

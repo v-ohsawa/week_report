@@ -15,38 +15,127 @@
 				<ul class="nav navbar-nav">
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-<div id="textsizer" class="p-top">
-	<%= link_to "小","#", class:"btn btn-default" %>
-        <%= link_to "中","#", class:"btn btn-default" %>
-        <%= link_to "大","#", class:"btn btn-default" %>
-</div>
-<script type="text/javascript">
-jQuery(document).ready(function() {
-    jQuery("#textsizer a").textresizer({
-        target: "#div815",
-        type: "fontSize",
-        sizes: ["12px", "16px", "20px"],
-        selectedIndex: 1
-    });
-});
-</script>
+					<div class="btn-group p-top textsizer" data-toggle="buttons">
+						<label class="btn btn-primary active f-small">
+							<input type="radio" name="options" checked>小
+						</label>
+						<label class="btn btn-primary f-medium">
+							<input type="radio" name="options">中
+						</label>
+						<label class="btn btn-primary f-big">
+							<input type="radio" name="options">大
+						</label>
+					</div>
+
+					<script>
+						var storage = sessionStorage;
+						$(function(){
+							switch(storage.getItem('font-size')){
+								case '12':
+									$("body").css("font-size","12px");
+									$(".f-small").addClass("active");
+									$(".f-medium").removeClass("active");
+									$(".f-big").removeClass("active");
+									break;
+								case '16':
+									$("body").css("font-size","16px");
+									$(".f-small").removeClass("active");
+									$(".f-medium").addClass("active");
+									$(".f-big").removeClass("active");
+									break;
+								case '20':
+									$("body").css("font-size","20px");
+									$(".f-small").removeClass("active");
+									$(".f-medium").removeClass("active");
+									$(".f-big").addClass("active");
+									break;
+								default:
+									break;
+							}
+						});
+					</script>
+					<script>
+						var storage = sessionStorage;
+						$(".f-small").click(function(){
+							$("body").css("font-size","12px");
+							storage.setItem('font-size', '12');
+						});
+						$(".f-medium").click(function(){
+							$("body").css("font-size","16px");
+							storage.setItem('font-size', '16');
+						});
+						$(".f-big").click(function(){
+							$("body").css("font-size","20px");
+							storage.setItem('font-size', '20');
+						});
+					</script>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-
+					<div class="btn-group p-top" data-toggle="buttons">
+						<label class="btn btn-primary active back-on">
+							<input type="radio" name="options" checked>背景ON
+						</label>
+						<label class="btn btn-primary back-off">
+							<input type="radio" name="options">背景OFF
+						</label>
+					</div>
+				</ul>
+				<script>
+					var storage = sessionStorage;
+					$(function(){
+						switch(storage.getItem('background')){
+							case 'on':
+								$("html").css("background","#fff url(/assets/back.jpg) no-repeat fixed top center");
+								$("body").css("background-color","rgba(51,51,51,0.6)").css("color","#fff");
+								$(".back-on").addClass("active");
+								$(".back-off").removeClass("active");
+								break;
+							case 'off':
+								$("html").css("background","#fff none no-repeat fixed top center");
+								$("body").css("background-color","#fff").css("color","#555");
+								$(".back-on").removeClass("active");
+								$(".back-off").addClass("active");
+								break;
+							default:
+								break;
+						}
+					});
+				</script>
+				<script>
+					var storage = sessionStorage;
+					$(".back-on").click(function(){
+						$("html").css("background","#fff url(/assets/back.jpg) no-repeat fixed top center");
+						$("body").css("background-color","rgba(51,51,51,0.6)").css("color","#fff");
+						storage.setItem('background', 'on');
+					});
+					$(".back-off").click(function(){
+						$("html").css("background","#fff none no-repeat fixed top center");
+						$("body").css("background-color","#fff").css("color","#555");
+						storage.setItem('background', 'off');
+					});
+				</script>
+				<ul class="nav navbar-nav navbar-right">
 					<li><%= link_to "ホーム", root_path %></li>
 					<!--<li><%= link_to "開発室", root_path %></li>-->
 					<% if signed_in? %>
 					<li><%= link_to "一覧",{controller:"all_reports", action:"index"} %></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">アカウント <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><%= link_to "パスワード変更", {controller:"user_setting", action:"edit", id:current_user.id} %></li>
-								<li class="divider"></li>
-								<li><%= link_to "サインアウト", signout_path, method: "delete" %></li>
-							</ul>
-						</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">アカウント <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><%= link_to "パスワード変更", {controller:"user_setting", action:"edit", id:current_user.id} %></li>
+							<li class="divider"></li>
+							<% if current_user.admin? %>
+							<li><%= link_to "ユーザー管理", {controller:"users", action:"index", id:current_user.id} %></li>
+							<li class="divider"></li>
+							<li><%= link_to "プロジェクト管理", {controller:"projects", action:"index", id:current_user.id} %></li>
+							<li class="divider"></li>
+							<% else %>
+							<% end %>
+							<li><%= link_to "サインアウト", signout_path, method: "delete" %></li>
+						</ul>
+					</li>
 					<% else %>
-						<li><%= link_to "サインイン", signin_path %></li>
+					<li><%= link_to "サインイン", signin_path %></li>
 					<% end %>
 				</ul>
 			</div><!--/.nav-collapse -->

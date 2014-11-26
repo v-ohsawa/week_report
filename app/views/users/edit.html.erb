@@ -1,6 +1,24 @@
-<h1>Editing user</h1>
+<h4 class="text-center">ユーザー情報更新</h4>
 
-<%= render 'form' %>
+<div class="row">
+	<div class="text-center col-xs-6 col-xs-offset-3">
+		<%= form_for(@user) do |f| %>
+			<%= render 'error_messages' %>
 
-<%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>
+		<%= f.label :worker_id, "社員番号" %>
+		<%= f.text_field :worker_id, class: "form-control text-center" %>
+
+		<%= f.label :name, "名前" %>
+		<%= f.text_field :name, class: "form-control text-center" %>
+
+		<%= f.label :password, "パスワード" %>
+		<%= f.password_field :password, class: "form-control text-center" %>
+
+		<%= f.label :password_confirmation, "パスワード確認" %>
+		<%= f.password_field :password_confirmation, class: "form-control text-center" %>
+
+		<%= f.submit "変更", class: "btn btn-lg btn-primary" %>
+	<% end %>
+
+	</div>
+</div>

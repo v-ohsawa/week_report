@@ -7,12 +7,11 @@
 		<!--週タイトル-->
 		<section>
 			<h4 class="text-center m-bottom">
-				<%= @year + "年-第" + @week + "週("  + @start_day.strftime('%m月%d日') + "-" + @end_day.strftime('%m月%d日') + ")" %>
+				<%= @start_day.strftime('%Y年%m月%d日') + "-" + @end_day.strftime('%Y年%m月%d日') %>
 			</h4>
 		</section>
 
-		<%= render 'modal_month' %>
-		<%= render 'modal_week' %>
+		<%= render 'modal_search' %>
 		<!--週報の中身が出力されます-->
 		<table class="table col-xs-12">
 

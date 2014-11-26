@@ -5,14 +5,10 @@ before_action :set_week_report, only: [:show, :edit, :update, :destroy]
 def index
 	if signed_in?
 		@start_day = Date.today.beginning_of_week
-		@week = @start_day.strftime("%W")
-		@year = @start_day.strftime("%Y")
 		@end_day = @start_day.end_of_week - 2
-		@week_reports = WeekReport.where('user_id = ? AND week_num = ? AND year_num = ?', current_user.id, @week, @year)
+		@week_reports = WeekReport.where('user_id = ? AND start_day = ?', current_user.id, @start_day)
 		session[:start_day] = @start_day
-		if (2..8).include?(@start_day.end_of_month.strftime('%d').to_i - @start_day.strftime('%d').to_i) then
-			flash.now[:danger] = "今週は月報です！"
-		end
+		judge_monthly
 	else
 		redirect_to controller:'sessions', action:'new'
 	end
@@ -22,14 +18,10 @@ end
 def change_week
 	if signed_in?
 		@start_day = Date.strptime(params[:start], "%Y-%m-%d").beginning_of_week
-		@week = @start_day.strftime("%W")
-		@year = @start_day.strftime("%Y")
 		@end_day = @start_day.end_of_week - 2
-		@week_reports = WeekReport.where('user_id = ? AND week_num = ? AND year_num = ?', current_user.id, @week, @year)
+		@week_reports = WeekReport.where('user_id = ? AND start_day = ?', current_user.id, @start_day)
 		session[:start_day] = @start_day
-		if (2..8).include?(@start_day.end_of_month.strftime('%d').to_i - @start_day.strftime('%d').to_i) then
-			flash.now[:danger] = "今週は月報です！"
-		end
+		judge_monthly
 		render 'index'
 	else
 		redirect_to controller:'sessions', action:'new'
@@ -44,17 +36,14 @@ end
 def new
   	@week_report = WeekReport.new
 	@start_day = Date.strptime(session[:start_day], "%Y-%m-%d")
-	@week = @start_day.strftime("%W")
-	@year = @start_day.strftime("%Y")
 	@end_day = @start_day.end_of_week - 2
 end
 
 # GET /week_reports/1/edit
 def edit
 	@start_day = Date.strptime(session[:start_day], "%Y-%m-%d")
-	@week = @start_day.strftime("%W")
-	@year = @start_day.strftime("%Y")
 	@end_day = @start_day.end_of_week - 2
+	@project = @week_report.project_id
 end
 
 #新規作成
@@ -86,18 +75,17 @@ def destroy
 	redirect_to controller:'week_reports', action:'change_week', start:session[:start_day]
 end
 
-  def all_index
-	@week_reports = WeekReport.all
-  end
-
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_week_report
       @week_report = WeekReport.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+	def judge_monthly
+		if (2..8).include?(@start_day.end_of_month.day - @start_day.day) then
+			flash.now[:danger] = "今週は月報です！"
+		end
+	end
     def week_report_params
-	    params.require(:week_report).permit(:user_id, :project_id, :done, :understood, :next, :year_num, :week_num, :start_day, :end_day)
+	    params.require(:week_report).permit(:user_id, :project_id, :done, :understood, :next, :start_day, :end_day)
     end
 end
